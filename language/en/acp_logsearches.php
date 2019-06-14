@@ -37,6 +37,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'NEW_VERSION'					=> 'New Version',
+	'NEW_VERSION_EXPLAIN'			=> 'There is a newer version of this extension available.',
+
 	'SEARCH_ALL'					=> 'All',
 	'SEARCH_FAILED'					=> 'Failed',
 	'SEARCH_LOG_ALL'				=> 'Log all searches',
@@ -46,7 +49,7 @@ $lang = array_merge($lang, array(
 	'SEARCH_LOG_PRUNE_ALL'			=> 'Prune all search log entries',
 	'SEARCH_LOG_PRUNE_ALL_EXPLAIN'	=> 'Setting this to “Successful” will only prune successful search log entries leaving failed searches in the log.',
 	'SEARCH_LOG_PRUNE_DAYS'			=> 'Prune log file days',
-	'SEARCH_LOG_PRUNE_DAYS_EXPLAIN'	=> 'The number of days to leave entries in the search log.<br />Setting this to zero will disable the pruning of the search log file.',
+	'SEARCH_LOG_PRUNE_DAYS_EXPLAIN'	=> 'The number of days to leave entries in the search log.<br>Setting this to zero will disable the pruning of the search log file.',
 	'SEARCH_SUCCESSFUL'				=> 'Successful',
 
 	'VERSION'						=> 'Version',

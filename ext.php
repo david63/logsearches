@@ -14,8 +14,6 @@ use phpbb\extension\base;
 
 class ext extends base
 {
-	const LOG_SEARCHES_VERSION	= '2.1.0 RC3';
-
 	/**
 	* Enable extension if phpBB version requirement is met
 	*

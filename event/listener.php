@@ -13,10 +13,12 @@ namespace david63\logsearches\event;
 * @ignore
 */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use phpbb\config\config;
 use phpbb\user;
 use phpbb\db\driver\driver_interface;
 use phpbb\language\language;
+use david63\logsearches\core\functions;
 
 /**
 * Event listener
@@ -42,25 +44,35 @@ class listener implements EventSubscriberInterface
 	*/
 	protected $search_log_table;
 
+	/** @var \david63\logsearches\core\functions */
+	protected $functions;
+
+	/** @var string phpBB tables */
+	protected $tables;
+
 	/**
 	* Constructor for listener
 	*
-	* @param \phpbb\config\config				$config				Config object
-	* @param \phpbb\user                		$user				User object
-	* @param \phpbb\db\driver\driver_interface	$db                 Database object
-	* @param phpbb\language\language			$language			Language object
-	* @param string								$search_log_table   Name of the table used to store log searches data
+	* @param \phpbb\config\config					$config				Config object
+	* @param \phpbb\user                			$user				User object
+	* @param \phpbb\db\driver\driver_interface		$db                 Database object
+	* @param phpbb\language\language				$language			Language object
+	* @param string									$search_log_table   Name of the table used to store log searches data
+	* @param \david63\logsearches\core\functions	functions			Functions for the extension
+	* @param array									$tables				phpBB db tables
 	*
 	* @return \david63\logsearches\event\listener
 	* @access public
 	*/
-	public function __construct(config $config, user $user, driver_interface $db, language $language, $search_log_table)
+	public function __construct(config $config, user $user, driver_interface $db, language $language, $search_log_table, functions $functions, $tables)
 	{
 		$this->config			= $config;
 		$this->user				= $user;
 		$this->db				= $db;
 		$this->language			= $language;
 		$this->search_log_table	= $search_log_table;
+		$this->functions		= $functions;
+		$this->tables			= $tables;
 	}
 
 	/**
@@ -88,7 +100,7 @@ class listener implements EventSubscriberInterface
 	public function log_search($event)
 	{
 		// Add the language file
-		$this->language->add_lang('logsearches', 'david63/logsearches');
+		$this->language->add_lang('logsearches', $this->functions->get_ext_namespace());
 
 		$search_data = array();
 		if ($event['keywords'])
@@ -128,7 +140,7 @@ class listener implements EventSubscriberInterface
 		}
 
 		$sql = 'SELECT forum_id, forum_name, parent_id
-			FROM ' . FORUMS_TABLE;
+			FROM ' . $this->tables['forums'];
 
 		$result = $this->db->sql_query($sql);
 
@@ -169,7 +181,7 @@ class listener implements EventSubscriberInterface
 		foreach ($authors as $key => $author)
 		{
 			$sql = 'SELECT username
-				FROM ' . USERS_TABLE . '
+				FROM ' . $this->tables['users'] . '
 				WHERE user_id = ' . $author;
 
 			$result = $this->db->sql_query($sql);

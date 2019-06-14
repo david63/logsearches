@@ -1,5 +1,6 @@
 imports:
     - { resource: tables.yml }
+    - { resource: phpbb_tables.yml }
 
 services:
     david63.logsearches.listener:
@@ -10,6 +11,8 @@ services:
             - '@dbal.conn'
             - '@language'
             - '%david63.logsearches.tables.search_log%'
+            - '@david63.logsearches.core.functions'
+            - '%tables%'			
         tags:
             - { name: event.listener }
 
@@ -39,3 +42,9 @@ services:
             - '%david63.logsearches.tables.search_log%'
             - '@language'
             - '@log'
+            - '@david63.logsearches.core.functions'
+
+    david63.logsearches.core.functions:
+        class: david63\logsearches\core\functions
+        arguments:
+            - '@ext.manager'

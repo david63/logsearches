@@ -1,12 +1,11 @@
-{% include 'overall_header.html' %}
-{% include '@david63_logsearches/head_panel.html' %}
+{% include '@' ~ NAMESPACE ~ '/head_panel.html' %}
 
 <form id="logsearches" method="post" action="{{ U_ACTION }}">
 	<fieldset>
 		<legend>{{ lang('SEARCH_LOG_OPTIONS') }}</legend>
 
 		<dl>
-			<dt><label for="search_log_all">{{ lang('SEARCH_LOG_ALL') }}{{ lang('COLON') }}</label><br /><span>{{ lang('SEARCH_LOG_ALL_EXPLAIN') }}</span></dt>
+			<dt><label for="search_log_all">{{ lang('SEARCH_LOG_ALL') }}{{ lang('COLON') }}</label><br><span>{{ lang('SEARCH_LOG_ALL_EXPLAIN') }}</span></dt>
  			<dd>
 				<input type="radio" id="search_log_all1" name="search_log_all" value="1"{% if SEARCH_LOG_ALL %} checked="checked"{% endif %} />
 				<label class="set" for="search_log_all1">{{ lang('SEARCH_ALL') }}</label>
@@ -16,7 +15,7 @@
 		</dl>
 
 		<dl>
-			<dt><label for="search_log_prune_all">{{ lang('SEARCH_LOG_PRUNE_ALL') }}{{ lang('COLON') }}</label><br /><span>{{ lang('SEARCH_LOG_PRUNE_ALL_EXPLAIN') }}</span></dt>
+			<dt><label for="search_log_prune_all">{{ lang('SEARCH_LOG_PRUNE_ALL') }}{{ lang('COLON') }}</label><br><span>{{ lang('SEARCH_LOG_PRUNE_ALL_EXPLAIN') }}</span></dt>
 			<dd>
 				<input type="radio" id="search_log_prune_all1" name="search_log_prune_all" value="1"{% if SEARCH_LOG_PRUNE_ALL %} checked="checked"{% endif %} />
 				<label class="set" for="search_log_prune_all1">{{ lang('SEARCH_ALL') }}</label>
@@ -26,14 +25,14 @@
 		</dl>
 
 		<dl>
-			<dt><label for="search_log_prune_days">{{ lang('SEARCH_LOG_PRUNE_DAYS') }}{{ lang('COLON') }}</label><br /><span>{{ lang('SEARCH_LOG_PRUNE_DAYS_EXPLAIN') }}</span></dt>
+			<dt><label for="search_log_prune_days">{{ lang('SEARCH_LOG_PRUNE_DAYS') }}{{ lang('COLON') }}</label><br><span>{{ lang('SEARCH_LOG_PRUNE_DAYS_EXPLAIN') }}</span></dt>
 			<dd>
 				<input class="textbox" name="search_log_prune_days" type="number" id="search_log_prune_days" value="{{ SEARCH_LOG_PRUNE_DAYS }}" maxlength="2" size="2" min="0" max="99" />
 			</dd>
 		</dl>
 
 		<dl>
-			<dt><label for="search_log_per_page">{{ lang('SEARCH_LOG_PER_PAGE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('SEARCH_LOG_PER_PAGE_EXPLAIN') }}</span></dt>
+			<dt><label for="search_log_per_page">{{ lang('SEARCH_LOG_PER_PAGE') }}{{ lang('COLON') }}</label><br><span>{{ lang('SEARCH_LOG_PER_PAGE_EXPLAIN') }}</span></dt>
 			<dd>
 				<input class="textbox" name="search_log_per_page" type="number" id="search_log_per_page" value="{{ SEARCH_LOG_PER_PAGE }}" maxlength="2" size="2" min="0" max="99" />
 			</dd>
@@ -50,5 +49,4 @@
 	</fieldset>
 </form>
 
-{% include '@david63_logsearches/donate.html' %}
-{% include 'overall_footer.html' %}
+{% include '@' ~ NAMESPACE ~ '/donate.html' %}

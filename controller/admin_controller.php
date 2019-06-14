@@ -9,7 +9,6 @@
 
 namespace david63\logsearches\controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use phpbb\config\config;
 use phpbb\db\driver\driver_interface;
 use phpbb\request\request;
@@ -19,7 +18,7 @@ use phpbb\user;
 use phpbb\auth\auth;
 use phpbb\language\language;
 use phpbb\log\log;
-use david63\logsearches\ext;
+use david63\logsearches\core\functions;
 
 /**
 * Admin controller
@@ -44,12 +43,8 @@ class admin_controller implements admin_interface
 	/** @var \phpbb\user */
 	protected $user;
 
-	/**
-	* The database table the search log is stored in
-	*
-	* @var string
-	*/
-	protected $search_log_table;
+	/** @var \phpbb\auth\auth */
+	protected $auth;
 
 	/** @var \phpbb\language\language */
 	protected $language;
@@ -57,26 +52,37 @@ class admin_controller implements admin_interface
 	/** @var \phpbb\log\log */
 	protected $log;
 
+	/** @var \david63\logsearches\core\functions */
+	protected $functions;
+
+	/**
+	* The database table the search log is stored in
+	*
+	* @var string
+	*/
+	protected $search_log_table;
+
 	/** @var string Custom form action */
 	protected $u_action;
 
 	/**
 	* Constructor for admin controller
 	*
-	* @param \phpbb\config\config				$config		Config object
-	* @param \phpbb\db\driver\driver_interface	$db
-	* @param \phpbb\request\request				$request	Request object
-	* @param \phpbb\template\template			$template	Template object
-	* @param \phpbb\pagination					$pagination
-	* @param \phpbb\user						$user		User object
-	* @param \phpbb\auth\auth 					$auth
-	* @param phpbb\language\language			$language
-	* @param \phpbb\log\log						$log
+	* @param \phpbb\config\config					$config			Config object
+	* @param \phpbb\db\driver\driver_interface		$db				The db connection
+	* @param \phpbb\request\request					$request		Request object
+	* @param \phpbb\template\template				$template		Template object
+	* @param \phpbb\pagination						$pagination		Pagination object
+	* @param \phpbb\user							$user			User object
+	* @param \phpbb\auth\auth 						$auth			Auth object
+	* @param phpbb\language\language				$language		Language object
+	* @param \phpbb\log\log							$log			Log object
+	* @param \david63\logsearches\core\functions	functions		Functions for the extension
 	*
 	* @return \david63\logsearches\controller\admin_controller
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, $search_log_table, language $language, log $log)
+	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, $search_log_table, language $language, log $log, functions $functions)
 	{
 		$this->config			= $config;
 		$this->db  				= $db;
@@ -88,6 +94,7 @@ class admin_controller implements admin_interface
 		$this->search_log_table	= $search_log_table;
 		$this->language			= $language;
 		$this->log				= $log;
+		$this->functions		= $functions;
 	}
 
 	/**
@@ -99,11 +106,13 @@ class admin_controller implements admin_interface
 	public function display_options()
 	{
 		// Add the language files
-		$this->language->add_lang('acp_logsearches', 'david63/logsearches');
+		$this->language->add_lang('acp_logsearches', $this->functions->get_ext_namespace());
 
 		// Create a form key for preventing CSRF attacks
 		$form_key = 'searchlog';
 		add_form_key($form_key);
+
+		$back = false;
 
 		// Is the form being submitted
 		if ($this->request->is_set_post('submit'))
@@ -131,7 +140,12 @@ class admin_controller implements admin_interface
 			'HEAD_TITLE'		=> $this->language->lang('SEARCH_LOGS'),
 			'HEAD_DESCRIPTION'	=> $this->language->lang('SEARCH_LOG_EXPLAIN'),
 
-			'VERSION_NUMBER'	=> ext::LOG_SEARCHES_VERSION,
+			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
+
+			'S_BACK'			=> $back,
+			'S_VERSION_CHECK'	=> $this->functions->version_check(),
+
+			'VERSION_NUMBER'	=> $this->functions->get_this_version(),
 		));
 
 		$this->template->assign_vars(array(
@@ -175,34 +189,6 @@ class admin_controller implements admin_interface
 		$sort_days	= $this->request->variable('st', 0);
 		$sort_dir	= $this->request->variable('sd', 'd');
 		$sort_key	= $this->request->variable('sk', 't');
-
-		// Delete entries if requested and able
-		if ($deletemark && $this->auth->acl_get('a_clearlogs'))
-		{
-			if (confirm_box(true))
-			{
-				$conditions = array();
-
-				if ($deletemark && count($marked))
-				{
-					$conditions['log_id'] = array('IN' => $marked);
-				}
-
-				$this->search_log_delete($conditions);
-			}
-			else
-			{
-				confirm_box(false, $this->language->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
-					'start'		=> $start,
-					'delmarked'	=> $deletemark,
-					'mark'		=> $marked,
-					'st'		=> $sort_days,
-					'sk'		=> $sort_key,
-					'sd'		=> $sort_dir,
-					'action'	=> $action,
-				)));
-			}
-		}
 
 		// Sorting
 		$limit_days = array(0 => $this->language->lang('ALL_ENTRIES'), 1 => $this->language->lang('1_DAY'), 7 => $this->language->lang('7_DAYS'), 14 => $this->language->lang('2_WEEKS'), 30 => $this->language->lang('1_MONTH'), 90 => $this->language->lang('3_MONTHS'), 180 => $this->language->lang('6_MONTHS'), 365 => $this->language->lang('1_YEAR'));
@@ -261,7 +247,9 @@ class admin_controller implements admin_interface
 			'HEAD_TITLE'		=> $this->language->lang('SEARCH_LOG'),
 			'HEAD_DESCRIPTION'	=> $this->language->lang('SEARCH_LOG_EXPLAIN'),
 
-			'VERSION_NUMBER'	=> ext::LOG_SEARCHES_VERSION,
+			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
+
+			'VERSION_NUMBER'	=> $this->functions->get_this_version(),
 		));
 
 		$this->template->assign_vars(array(

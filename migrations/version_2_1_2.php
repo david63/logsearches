@@ -23,7 +23,7 @@ class version_2_1_2 extends \phpbb\db\migration\migration
 		return array('\david63\logsearches\migrations\version_2_1_1');
 	}
 
-		public function update_data()
+	public function update_data()
 	{
 		return array(
 			array('config.remove', array('search_log_enable')),

@@ -56,7 +56,7 @@ class listener implements EventSubscriberInterface
 	* @param \phpbb\config\config					$config				Config object
 	* @param \phpbb\user                			$user				User object
 	* @param \phpbb\db\driver\driver_interface		$db                 Database object
-	* @param phpbb\language\language				$language			Language object
+	* @param \phpbb\language\language				$language			Language object
 	* @param string									$search_log_table   Name of the table used to store log searches data
 	* @param \david63\logsearches\core\functions	functions			Functions for the extension
 	* @param array									$tables				phpBB db tables
@@ -160,7 +160,7 @@ class listener implements EventSubscriberInterface
 		$used_ids = array_diff($forum_id_ary, $excluded_ids);
 
 		$forum_data = '';
-		foreach($used_ids as $key => $forum)
+		foreach ($used_ids as $key => $forum)
 		{
 			if ($forum_ary[$key]['parent_id'] == 0)
 			{

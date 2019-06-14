@@ -38,6 +38,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ALL_FORA'		=> 'All fora',
-	
+
 	'POSTS_SEARCH' 	=> 'Post search',
 ));

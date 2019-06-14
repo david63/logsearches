@@ -75,7 +75,7 @@ class admin_controller implements admin_interface
 	* @param \phpbb\pagination						$pagination		Pagination object
 	* @param \phpbb\user							$user			User object
 	* @param \phpbb\auth\auth 						$auth			Auth object
-	* @param phpbb\language\language				$language		Language object
+	* @param \phpbb\language\language				$language		Language object
 	* @param \phpbb\log\log							$log			Log object
 	* @param \david63\logsearches\core\functions	functions		Functions for the extension
 	*

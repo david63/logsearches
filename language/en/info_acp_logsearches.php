@@ -52,7 +52,6 @@ $lang = array_merge($lang, array(
 	'SEARCH_LOG_MANAGE'			=> 'Manage search log',
 	'SEARCH_LOG_PRUNE_LOG'		=> '<strong>Search log file pruned</strong>',
 	'SEARCH_LOG_OPTIONS'		=> 'Search log options',
-	'SEARCH_LOGS'				=> 'Log searches',
 	'SEARCH_STATUS'				=> 'Status',
 	'SEARCH_SUCCESS'			=> 'Success',
 	'SEARCH_TITLE'				=> 'Search type',

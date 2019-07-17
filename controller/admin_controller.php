@@ -137,7 +137,7 @@ class admin_controller implements admin_interface
 
 		// Template vars for header panel
 		$this->template->assign_vars(array(
-			'HEAD_TITLE'		=> $this->language->lang('SEARCH_LOGS'),
+			'HEAD_TITLE'		=> $this->language->lang('SEARCH_LOG'),
 			'HEAD_DESCRIPTION'	=> $this->language->lang('SEARCH_LOG_EXPLAIN'),
 
 			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
@@ -259,45 +259,6 @@ class admin_controller implements admin_interface
 
 			'U_ACTION'		=> $this->u_action . "&amp;$u_sort_param&amp;start=$start",
 		));
-	}
-
-	protected function search_log_delete($conditions = array())
-	{
-		if (!count($conditions))
-		{
-			trigger_error($this->language->lang('NO_LOG_ENTRIES_SELECTED') . adm_back_link($this->u_action), E_USER_WARNING);
-		}
-
-		$sql_where = 'WHERE ';
-
-		if (isset($conditions['keywords']))
-		{
-			$sql_where .= $this->generate_sql_keyword($conditions['keywords'], '');
-
-			unset($conditions['keywords']);
-		}
-
-		foreach ($conditions as $field => $field_value)
-		{
-			if (is_array($field_value) && count($field_value) == 2 && !is_array($field_value[1]))
-			{
-				$sql_where .= $field . ' ' . $field_value[0] . ' ' . $field_value[1];
-			}
-			else if (is_array($field_value) && isset($field_value['IN']) && is_array($field_value['IN']))
-			{
-				$sql_where .= $this->db->sql_in_set($field, $field_value['IN']);
-			}
-			else
-			{
-				$sql_where .= $field . ' = ' . $field_value;
-			}
-		}
-
-		$sql = 'DELETE FROM ' . $this->search_log_table . "
-					$sql_where";
-		$this->db->sql_query($sql);
-
-		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'SEARCH_LOG_CLEAR');
 	}
 
 	/**

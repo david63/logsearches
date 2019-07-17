@@ -27,15 +27,15 @@
 			<div class="table-body">
 				{% for logs in log %}
 					{% if logs.S_ROW_COUNT is even %}<div class="table-row1">{% else %}<div class="table-row2">{% endif %}
-						<div class="table-body-cell">{{ logs.USERNAME }}</div>
-						<div class="table-body-cell">{{ logs.IP }}</div>
-						<div class="table-body-cell">{{ logs.DATE }}</div>
-						<div class="table-body-cell">{{ logs.TYPE }}</div>
-						<div class="table-body-cell">{{ logs.TITLE }}</div>
-						<div class="table-body-cell">{{ logs.AUTHOR }}</div>
-						<div class="table-body-cell">{{ logs.KEYWORDS }}</div>
+						<div class="table-body-cell-narrow">{{ logs.USERNAME }}</div>
+						<div class="table-body-cell-narrow">{{ logs.IP }}</div>
+						<div class="table-body-cell-narrow">{{ logs.DATE }}</div>
+						<div class="table-body-cell-narrow">{{ logs.TYPE }}</div>
+						<div class="table-body-cell-narrow">{{ logs.TITLE }}</div>
+						<div class="table-body-cell-narrow">{{ logs.AUTHOR }}</div>
+						<div class="table-body-cell-narrow">{{ logs.KEYWORDS }}</div>
 						<div class="table-body-cell">{{ logs.FORA }}</div>
-						<div class="table-body-cell">{{ logs.DATA }}</div>
+						<div class="table-body-cell-narrow">{{ logs.DATA }}</div>
 					</div>
 				{% endfor %}
 			</div>

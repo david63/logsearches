@@ -16,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use phpbb\config\config;
 use phpbb\user;
+use phpbb\auth\auth;
 use phpbb\db\driver\driver_interface;
 use phpbb\language\language;
 use david63\logsearches\core\functions;
@@ -30,6 +31,9 @@ class listener implements EventSubscriberInterface
 
 	/** @var \phpbb\user */
 	protected $user;
+
+	/** @var \phpbb\auth\auth */
+	protected $auth;
 
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
@@ -55,6 +59,7 @@ class listener implements EventSubscriberInterface
 	*
 	* @param \phpbb\config\config					$config				Config object
 	* @param \phpbb\user                			$user				User object
+	* @param \phpbb\auth\auth 						$auth				Auth object
 	* @param \phpbb\db\driver\driver_interface		$db                 Database object
 	* @param \phpbb\language\language				$language			Language object
 	* @param string									$search_log_table   Name of the table used to store log searches data
@@ -64,10 +69,11 @@ class listener implements EventSubscriberInterface
 	* @return \david63\logsearches\event\listener
 	* @access public
 	*/
-	public function __construct(config $config, user $user, driver_interface $db, language $language, $search_log_table, functions $functions, $tables)
+	public function __construct(config $config, user $user, auth $auth, driver_interface $db, language $language, $search_log_table, functions $functions, $tables)
 	{
 		$this->config			= $config;
 		$this->user				= $user;
+		$this->auth				= $auth;
 		$this->db				= $db;
 		$this->language			= $language;
 		$this->search_log_table	= $search_log_table;
@@ -107,11 +113,13 @@ class listener implements EventSubscriberInterface
 		{
 			$search_data['k'] = $event['keywords'];
 		}
+
 		if ($this->author_id_ary)
 		{
 			$search_data['a'] = $this->get_search_authors($this->author_id_ary);
 		}
-		$search_data['f'] = $this->get_search_fora($this->ex_fid_ary);
+
+		$search_data['f'] = $this->get_search_fora($this->ex_fid_ary, $event['l_search_title']);
 		$search_data['t'] = $this->show_results;
 
 		if ($this->config['search_log_all'] || (!$this->config['search_log_all'] && !$total_match_count))
@@ -132,13 +140,14 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	public function get_search_fora($excluded_ids)
+	public function get_search_fora($excluded_ids, $title)
 	{
-		if (empty($excluded_ids))
+		if (empty($excluded_ids) || !empty($title))
 		{
 			return $this->language->lang('ALL_FORA');
 		}
 
+		// Build a list of fora that the user has permission for
 		$sql = 'SELECT forum_id, forum_name, parent_id
 			FROM ' . $this->tables['forums'];
 
@@ -146,13 +155,17 @@ class listener implements EventSubscriberInterface
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$forum_id_ary[]	= $row['forum_id'];
 			$forum_ary[]	= $row;
+
+			if ($this->auth->acl_get('f_list', $row['forum_id']))
+			{
+				$forum_id_ary[]	= $row['forum_id'];
+			}
 		}
 
 		$this->db->sql_freeresult($result);
 
-		if (sizeof($forum_id_ary) == sizeof($excluded_ids))
+		if (sizeof($forum_id_ary) == sizeof($excluded_ids) || sizeof($forum_id_ary) == (sizeof($forum_ary) - sizeof($excluded_ids)))
 		{
 			return $this->language->lang('ALL_FORA');
 		}

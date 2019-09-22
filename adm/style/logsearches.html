@@ -53,9 +53,9 @@
 		</div>
 	{% endif %}
 
-	<fieldset class="align">
-		{{ lang('DISPLAY_LOG') }}{{ lang('COLON') }}&nbsp;{{ S_LIMIT_DAYS }}&nbsp;{{ lang('SORT_BY') }}{{ lang('COLON') }} {{ S_SORT_KEY }} {{ S_SORT_DIR }}
-		<input class="button2" type="submit" value="{{ lang('GO') }}" name="sort" />
+	<fieldset>
+		{{ lang('DISPLAY_ENTRIES') }}{{ lang('COLON') }}&nbsp;{{ S_LIMIT_DAYS }}&nbsp;{{ lang('SORT_BY') }}{{ lang('COLON') }} {{ S_SORT_KEY }} {{ S_SORT_DIR }}
+		<input class="adm-button" type="submit" id="submit" name="sort" value="{{ lang('GO') }}">
 		{{ S_FORM_TOKEN }}
 	</fieldset>
 

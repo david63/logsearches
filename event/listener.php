@@ -105,6 +105,8 @@ class listener implements EventSubscriberInterface
 
 	public function log_search($event)
 	{
+		$total_match_count = $event['total_match_count'];
+
 		// Add the language file
 		$this->language->add_lang('logsearches', $this->functions->get_ext_namespace());
 
@@ -128,7 +130,7 @@ class listener implements EventSubscriberInterface
 			$sql_ary = array(
 				'log_data'			=> json_encode($search_data),
 				'log_ip'			=> $this->user->ip,
-				'log_search_type'	=> ($event['total_match_count'] > 0) ? true : false,
+				'log_search_type'	=> ($total_match_count > 0) ? true : false,
 				'log_time'			=> time(),
 				'log_title'			=> ($event['l_search_title']) ? $event['l_search_title'] : $this->language->lang('POSTS_SEARCH'),
 				'user_id'			=> (int) $this->user->data['user_id'],

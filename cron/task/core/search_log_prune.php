@@ -69,7 +69,7 @@ class search_log_prune extends \phpbb\cron\task\base
 			$and = ($this->config['search_log_prune_all']) ? '' : 'AND log_search_type <> 0';
 
 			$sql = 'DELETE FROM ' . $this->search_log_table . '
-				WHERE log_time < ' . $last_log . "
+				WHERE log_time < ' . (int) $last_log . "
 				$and";
 			$this->db->sql_query($sql);
 

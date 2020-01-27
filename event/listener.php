@@ -197,7 +197,7 @@ class listener implements EventSubscriberInterface
 		{
 			$sql = 'SELECT username
 				FROM ' . $this->tables['users'] . '
-				WHERE user_id = ' . $author;
+				WHERE user_id = ' . (int) $author;
 
 			$result = $this->db->sql_query($sql);
 			$search_user .= $this->db->sql_fetchfield('username') . ', ';

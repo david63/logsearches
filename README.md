@@ -7,6 +7,7 @@ Creates a log of searched enquiries.
 [![Latest Stable Version](https://poser.pugx.org/david63/logsearches/v/stable)](https://packagist.org/packages/david63/logsearches)
 [![Latest Unstable Version](https://poser.pugx.org/david63/logsearches/v/unstable)](https://packagist.org/packages/david63/logsearches)
 [![Total Downloads](https://poser.pugx.org/david63/logsearches/downloads)](https://packagist.org/packages/david63/logsearches)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d95819d1093b409d8e9d85103c44f55b)](https://www.codacy.com/manual/david63/logsearches?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=david63/logsearches&amp;utm_campaign=Badge_Grade)
 
 ## Minimum Requirements
 * phpBB 3.2.0

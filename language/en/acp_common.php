@@ -20,7 +20,7 @@ if (empty($lang) || !is_array($lang))
 	$lang = array();
 }
 
-/// DEVELOPERS PLEASE NOTE
+// DEVELOPERS PLEASE NOTE
 //
 // All language files should use UTF-8 as their encoding and the files must not contain a BOM.
 //
@@ -36,16 +36,19 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
+
 $lang = array_merge($lang, array(
-	'SEARCH_ALL'					=> 'All',
-	'SEARCH_FAILED'					=> 'Failed',
-	'SEARCH_LOG_ALL'				=> 'Log all searches',
-	'SEARCH_LOG_ALL_EXPLAIN'		=> 'Setting this to “Failed” will only log searches that produce no results.',
-	'SEARCH_LOG_PER_PAGE'			=> 'Items per page',
-	'SEARCH_LOG_PER_PAGE_EXPLAIN'	=> 'Set the number of search log items per page.',
-	'SEARCH_LOG_PRUNE_ALL'			=> 'Prune all search log entries',
-	'SEARCH_LOG_PRUNE_ALL_EXPLAIN'	=> 'Setting this to “Successful” will only prune successful search log entries leaving failed searches in the log.',
-	'SEARCH_LOG_PRUNE_DAYS'			=> 'Prune log file days',
-	'SEARCH_LOG_PRUNE_DAYS_EXPLAIN'	=> 'The number of days to leave entries in the search log.<br>Setting this to zero will disable the pruning of the search log file.',
-	'SEARCH_SUCCESSFUL'				=> 'Successful',
+	'DONATE'					=> 'Donate',
+	'DONATE_EXTENSIONS'			=> 'Donate to my extensions',
+	'DONATE_EXTENSIONS_EXPLAIN'	=> 'This extension, as with all of my extensions, is totally free of charge. If you have benefited from using it then please consider making a donation by clicking the PayPal donation button opposite - I would appreciate it. I promise that there will be no spam nor requests for further donations, although they would always be welcome.',
+
+	'NEW_VERSION'				=> 'New Version - %s',
+	'NEW_VERSION_EXPLAIN'		=> 'Version %1$s of this extension is now available for download.<br>%2$s',
+	'NEW_VERSION_LINK'			=> 'Download here',
+	'NO_VERSION_EXPLAIN'		=> 'Version update information is not available.',
+
+	'PAYPAL_BUTTON'				=> 'Donate with PayPal button',
+	'PAYPAL_TITLE'				=> 'PayPal - The safer, easier way to pay online!',
+
+	'VERSION'					=> 'Version',
 ));

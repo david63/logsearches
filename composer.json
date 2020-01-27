@@ -2,8 +2,8 @@
 	"name": "david63/logsearches",
 	"type": "phpbb-extension",
 	"description": "Creates a log of searched enquiries.",
-	"version": "2.1.0-RC3",
-	"time": "2018-11-26",
+	"version": "3.1.0-RC1",
+	"time": "202-01-27",
 	"keywords": [
 		"phpbb",
 		"extension",
@@ -16,19 +16,20 @@
 			"role": "Developer"
 		}],
 	"require": {
-        "php": ">=5.4,<7.1",
-		"phpbb/phpbb": ">=3.2.0",
+        "php": ">=7.3.1",
+		"phpbb/phpbb": ">=3.3.0",
         "composer/installers": "~1.0"
     },
 	"extra": {
-		"display-name": "[*] Log searches",
+		"display-name": "[**] Log searches",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.2.0"
+			"phpbb/phpbb": ">=3.3.0"
 		},
 		"version-check": {
         	"host": "version.phpbbdev.space",
-        	"directory": "/3.2",
-        	"filename": "/log_searches_version_file.json"
+        	"directory": "/versions",
+        	"filename": "log_searches_version_file.json",
+			"ssl": false
     	}
 	}
 }

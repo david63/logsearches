@@ -55,12 +55,8 @@ class admin_controller implements admin_interface
 	/** @var \david63\logsearches\core\functions */
 	protected $functions;
 
-	/**
-	* The database table the search log is stored in
-	*
-	* @var string
-	*/
-	protected $search_log_table;
+	/** @var string phpBB tables */
+	protected $tables;
 
 	/** @var string Custom form action */
 	protected $u_action;
@@ -78,11 +74,12 @@ class admin_controller implements admin_interface
 	* @param \phpbb\language\language				$language		Language object
 	* @param \phpbb\log\log							$log			Log object
 	* @param \david63\logsearches\core\functions	functions		Functions for the extension
+	* @param array									$tables			phpBB db tables
 	*
 	* @return \david63\logsearches\controller\admin_controller
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, $search_log_table, language $language, log $log, functions $functions)
+	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, language $language, log $log, functions $functions)
 	{
 		$this->config			= $config;
 		$this->db  				= $db;
@@ -211,7 +208,7 @@ class admin_controller implements admin_interface
 
 		// Get total log count for pagination
 		$sql = 'SELECT COUNT(log_id) AS total_logs
-			FROM ' . $this->search_log_table . '
+			FROM ' . $this->tables['search_log'] . '
 				WHERE log_time >= ' . (int) $sql_where;
 		$result		= $this->db->sql_query($sql);
 		$log_count	= (int) $this->db->sql_fetchfield('total_logs');
@@ -222,7 +219,7 @@ class admin_controller implements admin_interface
 		$this->pagination->generate_template_pagination($action, 'pagination', 'start', $log_count, $this->config['search_log_per_page'], $start);
 
 		$sql = 'SELECT l.*, u.username, u.username_clean, u.user_colour
-			FROM ' . $this->search_log_table . ' l, ' . USERS_TABLE . ' u
+			FROM ' . $this->tables['search_log'] . ' l, ' . USERS_TABLE . ' u
 			WHERE u.user_id = l.user_id
 			AND l.log_time >= ' . (int) $sql_where . "
 			ORDER BY $sql_sort";

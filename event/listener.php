@@ -41,13 +41,6 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\language\language */
 	protected $language;
 
-	/**
-	* The database table the search log is stored in
-	*
-	* @var string
-	*/
-	protected $search_log_table;
-
 	/** @var \david63\logsearches\core\functions */
 	protected $functions;
 
@@ -62,21 +55,19 @@ class listener implements EventSubscriberInterface
 	* @param \phpbb\auth\auth 						$auth				Auth object
 	* @param \phpbb\db\driver\driver_interface		$db                 Database object
 	* @param \phpbb\language\language				$language			Language object
-	* @param string									$search_log_table   Name of the table used to store log searches data
 	* @param \david63\logsearches\core\functions	functions			Functions for the extension
 	* @param array									$tables				phpBB db tables
 	*
 	* @return \david63\logsearches\event\listener
 	* @access public
 	*/
-	public function __construct(config $config, user $user, auth $auth, driver_interface $db, language $language, $search_log_table, functions $functions, $tables)
+	public function __construct(config $config, user $user, auth $auth, driver_interface $db, language $language, functions $functions, $tables)
 	{
 		$this->config			= $config;
 		$this->user				= $user;
 		$this->auth				= $auth;
 		$this->db				= $db;
 		$this->language			= $language;
-		$this->search_log_table	= $search_log_table;
 		$this->functions		= $functions;
 		$this->tables			= $tables;
 	}
@@ -137,7 +128,7 @@ class listener implements EventSubscriberInterface
 			);
 
 			// Insert the search data into the database
-			$sql = 'INSERT INTO ' . $this->search_log_table . ' ' . $this->db->sql_build_array('INSERT', $sql_ary);
+			$sql = 'INSERT INTO ' . $this->tables['search_log'] . ' ' . $this->db->sql_build_array('INSERT', $sql_ary);
 			$this->db->sql_query($sql);
 		}
 	}

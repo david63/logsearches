@@ -10,9 +10,8 @@ services:
             - '@auth'			
             - '@dbal.conn'
             - '@language'
-            - '%david63.logsearches.tables.search_log%'
             - '@david63.logsearches.core.functions'
-            - '%tables%'			
+            - '%tables%'
         tags:
             - { name: event.listener }
 
@@ -23,7 +22,7 @@ services:
             - '@dbal.conn'
             - '@log'
             - '@user'
-            - '%david63.logsearches.tables.search_log%'
+            - '%tables%'
         calls:
             - [set_name, [cron.task.core.search_log_prune]]
         tags:
@@ -39,10 +38,10 @@ services:
             - '@pagination'
             - '@user'
             - '@auth'
-            - '%david63.logsearches.tables.search_log%'
             - '@language'
             - '@log'
             - '@david63.logsearches.core.functions'
+            - '%tables%'			
 
     david63.logsearches.core.functions:
         class: david63\logsearches\core\functions

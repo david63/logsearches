@@ -79,7 +79,7 @@ class admin_controller implements admin_interface
 	* @return \david63\logsearches\controller\admin_controller
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, language $language, log $log, functions $functions)
+	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, language $language, log $log, functions $functions, $tables)
 	{
 		$this->config			= $config;
 		$this->db  				= $db;
@@ -88,10 +88,10 @@ class admin_controller implements admin_interface
 		$this->pagination		= $pagination;
 		$this->user				= $user;
 		$this->auth				= $auth;
-		$this->search_log_table	= $search_log_table;
 		$this->language			= $language;
 		$this->log				= $log;
 		$this->functions		= $functions;
+		$this->tables  			= $tables;
 	}
 
 	/**
@@ -251,7 +251,7 @@ class admin_controller implements admin_interface
 
 			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
 
-			'VERSION_NUMBER'	=> $this->functions->get_this_version(),
+			'VERSION_NUMBER'	=> $this->functions->get_meta('version'),
 		));
 
 		$this->template->assign_vars(array(

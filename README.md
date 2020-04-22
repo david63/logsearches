@@ -9,6 +9,9 @@ Creates a log of searched enquiries.
 [![Total Downloads](https://poser.pugx.org/david63/logsearches/downloads)](https://packagist.org/packages/david63/logsearches)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d95819d1093b409d8e9d85103c44f55b)](https://www.codacy.com/manual/david63/logsearches?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=david63/logsearches&amp;utm_campaign=Badge_Grade)
 
+[![Compatible](https://img.shields.io/badge/compatible-phpBB:3.2.x-blue.svg)](https://shields.io/)
+[![Compatible](https://img.shields.io/badge/compatible-phpBB:3.3.x-blue.svg)](https://shields.io/)
+
 ## Minimum Requirements
 * phpBB 3.2.0
 * PHP 5.4

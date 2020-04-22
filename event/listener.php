@@ -101,7 +101,7 @@ class listener implements EventSubscriberInterface
 		// Add the language file
 		$this->language->add_lang('logsearches', $this->functions->get_ext_namespace());
 
-		$search_data = array();
+		$search_data = [];
 		if ($event['keywords'])
 		{
 			$search_data['k'] = $event['keywords'];

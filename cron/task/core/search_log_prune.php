@@ -43,12 +43,13 @@ class search_log_prune extends \phpbb\cron\task\base
 	* @param \phpbb\user		$user		User object
 	* @param array				$tables		phpBB db tables
 	*/
-	public function __construct(config $config, driver_interface $db, log $log, user $user)
+	public function __construct(config $config, driver_interface $db, log $log, user $user, $tables)
 	{
-		$this->config			= $config;
-		$this->db				= $db;
-		$this->log				= $log;
-		$this->user				= $user;
+		$this->config	= $config;
+		$this->db		= $db;
+		$this->log		= $log;
+		$this->user		= $user;
+		$this->tables	= $tables;
 	}
 
 	/**

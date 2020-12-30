@@ -2,11 +2,12 @@
 
 Creates a log of searched enquiries.
 
-[![Build Status](https://travis-ci.com/david63/logsearches.svg?branch=master)](https://travis-ci.com/david63/logsearches)
+[![Build Status](https://github.com/david63/logsearches/workflows/Tests/badge.svg)](https://github.com/phpbb-extensions/david63/logsearches)
 [![License](https://poser.pugx.org/david63/logsearches/license)](https://packagist.org/packages/david63/logsearches)
 [![Latest Stable Version](https://poser.pugx.org/david63/logsearches/v/stable)](https://packagist.org/packages/david63/logsearches)
 [![Latest Unstable Version](https://poser.pugx.org/david63/logsearches/v/unstable)](https://packagist.org/packages/david63/logsearches)
 [![Total Downloads](https://poser.pugx.org/david63/logsearches/downloads)](https://packagist.org/packages/david63/logsearches)
+[![codecov](https://codecov.io/gh/david63/logsearches/branch/master/graph/badge.svg?token=D2500PgRex)](https://codecov.io/gh/david63/logsearches)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d95819d1093b409d8e9d85103c44f55b)](https://www.codacy.com/manual/david63/logsearches?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=david63/logsearches&amp;utm_campaign=Badge_Grade)
 
 [![Compatible](https://img.shields.io/badge/compatible-phpBB:3.2.x-blue.svg)](https://shields.io/)

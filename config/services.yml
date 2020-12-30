@@ -47,3 +47,6 @@ services:
         class: david63\logsearches\core\functions
         arguments:
             - '@ext.manager'
+
+    _defaults:
+        public: true
